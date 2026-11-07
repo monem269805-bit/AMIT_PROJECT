@@ -1,0 +1,239 @@
+table phones
+	lineageTag: d3bc8b31-9386-4728-a3fa-7695624d8afd
+
+	measure 'Product Count' = DISTINCTCOUNT ( phones[asin] )
+		formatString: #,0
+		lineageTag: c4932de9-d4fd-40fa-a78e-8a8cd247b449
+
+	measure 'Avg Product Price' = AVERAGE ( phones[product_price] )
+		formatString: \$#,0.00
+		lineageTag: 67921829-a147-48ea-9e18-f2878009eb46
+
+	measure 'Avg Original Price' = AVERAGE ( phones[product_original_price] )
+		formatString: \$#,0.00
+		lineageTag: 7e192333-71f3-4b48-b94e-d252a275ec67
+
+	measure 'Avg Min Offer Price' = AVERAGE ( phones[product_minimum_offer_price] )
+		formatString: \$#,0.00
+		lineageTag: 81088a2e-7108-4c31-8f2d-1610d1ff20e8
+
+	measure 'Avg Price Gap' = AVERAGE ( phones[Price Gap] )
+		formatString: \$#,0.00
+		lineageTag: bcc029c8-c134-4562-b499-0008d068b985
+
+	measure 'Avg Star Rating' = AVERAGE ( phones[product_star_rating] )
+		formatString: 0.00
+		lineageTag: adb15e1c-b9bd-4900-8b66-a008e2a40740
+
+	measure 'Total Sales Volume' = SUM ( phones[sales_volume_num] )
+		formatString: #,0
+		lineageTag: 01c4a7ec-c435-4e23-b537-04dce422417e
+
+	measure 'Sales per Product' = DIVIDE ( [Total Sales Volume], [Product Count] )
+		formatString: #,0.0
+		lineageTag: fd65bce5-1376-4b81-9319-791f9269b39d
+
+	measure 'Number of Offers' = SUM ( phones[product_num_offers] )
+		formatString: #,0
+		lineageTag: 6e67e93d-4548-49aa-9847-6e088edb1da6
+
+	measure 'Best Sellers Count' = CALCULATE ( COUNTROWS ( phones ), phones[is_best_seller] = TRUE() )
+		formatString: #,0
+		lineageTag: 8d783aaf-25e4-4655-942b-59c4a8be1eb5
+
+	measure 'Amazon Choice Count' = CALCULATE ( COUNTROWS ( phones ), phones[is_amazon_choice] = TRUE() )
+		formatString: #,0
+		lineageTag: 0a02f0bf-0503-4f49-91c0-1450bfc6af19
+
+	measure 'Prime %' = DIVIDE ( CALCULATE ( COUNTROWS ( phones ), phones[is_prime] = TRUE() ), COUNTROWS ( phones ) )
+		formatString: 0.0%
+		lineageTag: 3ce38af0-0a0d-4454-9966-d11f0337e986
+
+	measure 'Climate Friendly %' = DIVIDE ( CALCULATE ( COUNTROWS ( phones ), phones[climate_pledge_friendly] = TRUE() ), COUNTROWS ( phones ) )
+		formatString: 0.0%
+		lineageTag: b0b8ed65-98db-489b-9a39-0e0b3ff3327d
+
+	measure 'Est. Revenue' = SUMX ( phones, phones[product_price] * phones[sales_volume_num] )
+		formatString: \$#,0
+		lineageTag: f9939928-8040-465c-b825-47d8bd58b9ea
+
+	column asin
+		dataType: string
+		lineageTag: cb9a9aee-fbe5-4612-a7e1-565924042a9b
+		summarizeBy: none
+		sourceColumn: asin
+
+	column product_title
+		dataType: string
+		lineageTag: 3ec94cbc-9f65-4195-9cbf-d2f2a9eed6bf
+		summarizeBy: none
+		sourceColumn: product_title
+
+	column product_price
+		dataType: double
+		formatString: \$#,0.00
+		lineageTag: 8c2c734f-9219-4111-a375-ed4f384b5082
+		summarizeBy: none
+		sourceColumn: product_price
+
+	column product_original_price
+		dataType: double
+		formatString: \$#,0.00
+		lineageTag: 4d5f806c-120c-4d10-bd02-8a19f049b91c
+		summarizeBy: none
+		sourceColumn: product_original_price
+
+	column currency
+		dataType: string
+		lineageTag: 66a84ad4-82a7-4322-ad9a-f2154393c15d
+		summarizeBy: none
+		sourceColumn: currency
+
+	column product_star_rating
+		dataType: double
+		lineageTag: e6609b4f-804d-4185-8277-70ffefb3f74e
+		summarizeBy: none
+		sourceColumn: product_star_rating
+
+	column product_num_ratings
+		dataType: int64
+		lineageTag: e204c322-2a59-4baf-b302-c13e99a116bb
+		summarizeBy: none
+		sourceColumn: product_num_ratings
+
+	column product_num_offers
+		dataType: int64
+		lineageTag: 6af8115d-5ba0-4868-ac92-84adc4927f9d
+		summarizeBy: none
+		sourceColumn: product_num_offers
+
+	column product_minimum_offer_price
+		dataType: double
+		formatString: \$#,0.00
+		lineageTag: a8dfb6a0-db73-40a5-882d-360de976a4f9
+		summarizeBy: none
+		sourceColumn: product_minimum_offer_price
+
+	column is_best_seller
+		dataType: boolean
+		lineageTag: beb17d25-9068-44d1-8970-a1f1432bc0d6
+		summarizeBy: none
+		sourceColumn: is_best_seller
+
+	column is_amazon_choice
+		dataType: boolean
+		lineageTag: 4abb8919-e943-4b1c-b467-9a296d0f71a7
+		summarizeBy: none
+		sourceColumn: is_amazon_choice
+
+	column is_prime
+		dataType: boolean
+		lineageTag: 8ea61de8-0330-43b8-83b2-dde1500276b8
+		summarizeBy: none
+		sourceColumn: is_prime
+
+	column product_availability
+		dataType: string
+		lineageTag: 11290583-d64d-44e9-a353-86a93d636f9e
+		summarizeBy: none
+		sourceColumn: product_availability
+
+	column climate_pledge_friendly
+		dataType: boolean
+		lineageTag: f1f9b180-325c-4b9f-9a8a-48cb2c295bb0
+		summarizeBy: none
+		sourceColumn: climate_pledge_friendly
+
+	column sales_volume
+		dataType: string
+		lineageTag: 24d726a1-ed0a-43fc-aae5-2a1c4f3d16d5
+		summarizeBy: none
+		sourceColumn: sales_volume
+
+	column delivery
+		dataType: string
+		lineageTag: fd331290-1451-4592-86e1-4aab9a3a216c
+		summarizeBy: none
+		sourceColumn: delivery
+
+	column has_variations
+		dataType: boolean
+		lineageTag: 77924b55-44b4-4121-b3be-32d602860e88
+		summarizeBy: none
+		sourceColumn: has_variations
+
+	column coupon_text
+		dataType: string
+		lineageTag: 8bbb2a78-5684-4c84-9e28-6ef9a14acb76
+		summarizeBy: none
+		sourceColumn: coupon_text
+
+	column sales_volume_num
+		dataType: int64
+		lineageTag: 9c609cbd-791e-4a00-ae23-ed16336080a3
+		summarizeBy: none
+		sourceColumn: sales_volume_num
+
+	column 'Price Gap' = IF ( NOT ISBLANK ( phones[product_original_price] ) && NOT ISBLANK ( phones[product_minimum_offer_price] ), phones[product_original_price] - phones[product_minimum_offer_price] )
+		dataType: double
+		formatString: \$#,0.00
+		lineageTag: 94bcc604-90fa-4856-8f73-4b3a8a3960b8
+		summarizeBy: none
+
+	column 'Price Gap %' = DIVIDE ( phones[Price Gap], phones[product_original_price] )
+		dataType: double
+		formatString: 0.0%
+		lineageTag: c17554f0-73b0-49d1-9f3e-f0e41961d248
+		summarizeBy: none
+
+	column Badge = SWITCH ( TRUE(), phones[is_best_seller] && phones[is_amazon_choice], "Both", phones[is_best_seller], "Best Seller", phones[is_amazon_choice], "Amazon's Choice", "Regular" )
+		dataType: string
+		lineageTag: ffce5f9e-0506-4027-8a11-f659c61855c8
+		summarizeBy: none
+
+	column 'Prime Label' = IF ( phones[is_prime], "Prime", "Non-Prime" )
+		dataType: string
+		lineageTag: 0c1c1940-1ab1-4d49-a68e-5a365d9b9031
+		summarizeBy: none
+
+	column 'Climate Label' = IF ( phones[climate_pledge_friendly], "Climate Friendly", "Not Climate Friendly" )
+		dataType: string
+		lineageTag: 39e7d53a-42e1-49fa-895a-01a90bbcfdd4
+		summarizeBy: none
+
+	column 'Price Band' = IF ( ISBLANK ( phones[product_price] ), "Unknown", IF ( phones[product_price] < 100, "Under $100", IF ( phones[product_price] < 250, "$100-$249", IF ( phones[product_price] < 500, "$250-$499", "$500+" ) ) ) )
+		dataType: string
+		lineageTag: c50d6fb6-5fba-46da-b23d-bb9da79f949c
+		summarizeBy: none
+		sortByColumn: 'Price Band Order'
+
+	column 'Price Band Order' = IF ( ISBLANK ( phones[product_price] ), 5, IF ( phones[product_price] < 100, 1, IF ( phones[product_price] < 250, 2, IF ( phones[product_price] < 500, 3, 4 ) ) ) )
+		dataType: int64
+		formatString: 0
+		lineageTag: 4ca15ce3-79c7-4846-8441-1e29929b16b6
+		summarizeBy: none
+
+	partition phones = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CsvPath), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Dedup = Table.Distinct(Promoted, {"asin"}),
+				    CleanPrice = (t as nullable text) as nullable number => try Number.FromText(Text.Trim(Text.Replace(t, "$", "")), "en-US") otherwise null,
+				    Prices = Table.TransformColumns(Dedup, {{"product_price", CleanPrice, type number}, {"product_original_price", CleanPrice, type number}, {"product_minimum_offer_price", CleanPrice, type number}}),
+				    Title = Table.TransformColumns(Prices, {{"product_title", each Text.Replace(Text.Replace(_, "&amp;", "&"), "&quot;", """"), type text}}),
+				    Sales = Table.AddColumn(Title, "sales_volume_num", each let s = [sales_volume] in if s <> null and Text.Contains(s, "bought in past month") then (let t = Text.BeforeDelimiter(s, "+") in if Text.EndsWith(t, "K") then Number.FromText(Text.TrimEnd(t, "K"), "en-US") * 1000 else Number.FromText(t, "en-US")) else null, Int64.Type),
+				    Types = Table.TransformColumnTypes(Sales, {{"product_star_rating", type number}, {"product_num_ratings", Int64.Type}, {"product_num_offers", Int64.Type}, {"is_best_seller", type logical}, {"is_amazon_choice", type logical}, {"is_prime", type logical}, {"climate_pledge_friendly", type logical}, {"has_variations", type logical}}, "en-US"),
+				    Currency = Table.ReplaceValue(Types, null, "USD", Replacer.ReplaceValue, {"currency"}),
+				    Coupon = Table.ReplaceValue(Currency, null, "No coupon", Replacer.ReplaceValue, {"coupon_text"}),
+				    Avail = Table.ReplaceValue(Coupon, null, "Not specified", Replacer.ReplaceValue, {"product_availability"}),
+				    Dropped = Table.RemoveColumns(Avail, {"unit_price", "unit_count"}),
+				    Final = Table.SelectColumns(Dropped, {"asin","product_title","product_price","product_original_price","currency","product_star_rating","product_num_ratings","product_num_offers","product_minimum_offer_price","is_best_seller","is_amazon_choice","is_prime","product_availability","climate_pledge_friendly","sales_volume","delivery","has_variations","coupon_text","sales_volume_num"})
+				in
+				    Final
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,7 @@
+expression CsvPath = "C:\Users\MohamedAhmed\Desktop\AMIT_PROJECT\data\phone_search.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 622cd35c-0ba6-4407-81c0-4860b212c54c
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
